@@ -1,0 +1,28 @@
+# --- Basic Utilities ---
+requests
+tqdm
+pandas
+python-dotenv
+ipykernel
+
+# --- Parsing (New) ---
+docling
+
+# --- AI & Math ---
+# Note: Torch is best installed manually for H100 (see command below)
+numpy
+accelerate
+
+# --- Vector DB & RAG ---
+chromadb
+langchain
+langchain-community
+langchain-huggingface
+langchain-chroma
+sentence-transformers
+rank-bm25
+
+# --- Serving Engine (For H100) ---
+vllm>=0.6.0
+openai
+huggingface_hub

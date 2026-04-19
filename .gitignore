@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data (large files — re-generate from raw PDFs)
+data/chroma_db/
+data/parsed/
+
+# Keep raw PDFs tracked (small)
+# !data/raw_pdfs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# Results (regenerable)
+*.csv
+
+# Model cache (downloaded at runtime)
+*.bin
+*.safetensors
+*.gguf
+
+# Temp
+/tmp/
+*.log
+data
