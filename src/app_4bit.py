@@ -30,56 +30,6 @@ st.set_page_config(
 st.title("⚖️ GFR Legal Assistant (Qwen 2.5 14B - 4bit)")
 st.markdown("Ask financial and legal questions about the General Financial Rules (GFR) 2025.")
 
-# Custom pink/rose theme
-st.markdown("""
-<style>
-    /* Main background */
-    .stApp {
-        background: linear-gradient(135deg, #fff0f5 0%, #ffe4ec 50%, #fce4f2 100%);
-    }
-    /* Sidebar */
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #f8bbd0 0%, #f48fb1 100%);
-    }
-    [data-testid="stSidebar"] .stMarkdown {
-        color: #4a0e2e;
-    }
-    /* Chat input */
-    .stChatInput textarea {
-        border-color: #e91e63 !important;
-    }
-    /* Buttons */
-    .stButton > button {
-        background-color: #e91e63;
-        color: white;
-        border: none;
-        border-radius: 20px;
-    }
-    .stButton > button:hover {
-        background-color: #c2185b;
-        color: white;
-    }
-    /* Headers */
-    h1 {
-        color: #880e4f !important;
-    }
-    /* Spinner */
-    .stSpinner > div {
-        border-top-color: #e91e63 !important;
-    }
-    /* Expander */
-    .streamlit-expanderHeader {
-        background-color: #fce4ec;
-        border-radius: 8px;
-    }
-    /* Chat messages */
-    [data-testid="stChatMessage"] {
-        background-color: rgba(255, 255, 255, 0.7);
-        border-radius: 12px;
-        border: 1px solid #f8bbd0;
-    }
-</style>
-""", unsafe_allow_html=True)
 
 # --------------------------------------------------------------------------------
 # Model & DB Loading 

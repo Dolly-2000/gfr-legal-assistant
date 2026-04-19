@@ -46,7 +46,7 @@ nvidia-smi
 ### Step 2: Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/gfr-legal-assistant.git
+git clone https://github.com/Dolly-2000/gfr-legal-assistant.git
 cd gfr-legal-assistant
 ```
 
