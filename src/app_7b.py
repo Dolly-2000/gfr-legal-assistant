@@ -17,7 +17,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, BitsAndB
 from langchain_huggingface import HuggingFaceEmbeddings, HuggingFacePipeline
 from langchain_chroma import Chroma
 from langchain_core.prompts import PromptTemplate
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from langchain_core.output_parsers import StrOutputParser
 
 # Configure Streamlit page
@@ -50,10 +50,36 @@ def load_rag_pipeline():
         shutil.copytree(nas_db_dir, local_db_dir)
         
     vectorstore = Chroma(persist_directory=local_db_dir, embedding_function=embeddings, collection_name="gfr_2025")
-    retriever = vectorstore.as_retriever(
-        search_type="mmr",
-        search_kwargs={"k": 8, "fetch_k": 20, "lambda_mult": 0.7}
-    )
+
+    _RULE_NUM_RE = re.compile(r'rule\s*(?:no\.?\s*)?(\d+)', re.IGNORECASE)
+
+    def smart_retrieve(query):
+        mentioned_rules = _RULE_NUM_RE.findall(query)
+        results = []
+        seen_ids = set()
+        if mentioned_rules:
+            for rule_num in mentioned_rules:
+                exact_docs = vectorstore.similarity_search(
+                    query, k=3, filter={"rule_number": rule_num}
+                )
+                for doc in exact_docs:
+                    doc_id = doc.metadata.get("rule_number", "") + "_" + doc.page_content[:80]
+                    if doc_id not in seen_ids:
+                        seen_ids.add(doc_id)
+                        results.append(doc)
+        remaining = max(8 - len(results), 4)
+        semantic_docs = vectorstore.max_marginal_relevance_search(
+            query, k=remaining, fetch_k=20, lambda_mult=0.85
+        )
+        for doc in semantic_docs:
+            doc_id = doc.metadata.get("rule_number", "") + "_" + doc.page_content[:80]
+            if doc_id not in seen_ids:
+                seen_ids.add(doc_id)
+                results.append(doc)
+        print(f"[RETRIEVAL] Mentioned rules: {mentioned_rules} | Total retrieved: {len(results)}")
+        return results[:10]
+
+    retriever = RunnableLambda(smart_retrieve)
 
     # Qwen2.5-7B-Instruct — half the size of 14B, much faster
     model_id = "Qwen/Qwen2.5-7B-Instruct"
