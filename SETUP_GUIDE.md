@@ -3,7 +3,7 @@
 
 ---
 
-## 📋 Project Overview
+##  Project Overview
 
 This project is a **Retrieval-Augmented Generation (RAG)** system that answers questions about India's General Financial Rules (GFR) 2025. It parses the GFR PDF, chunks the rules, embeds them into a vector database, and uses a Large Language Model (LLM) to generate answers with source citations.
 
@@ -17,7 +17,7 @@ This project is a **Retrieval-Augmented Generation (RAG)** system that answers q
 
 ---
 
-## 🖥️ Hardware Requirements
+##  Hardware Requirements
 
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
@@ -30,7 +30,7 @@ This project is a **Retrieval-Augmented Generation (RAG)** system that answers q
 
 ---
 
-## 🚀 Step-by-Step Setup (Fresh Machine)
+##  Step-by-Step Setup (Fresh Machine)
 
 ### Step 1: Install System Dependencies
 
@@ -85,7 +85,7 @@ data/raw_pdfs/GFR2025.pdf
 
 ---
 
-## 📂 Project File Structure
+##  Project File Structure
 
 ```
 Thesis/
@@ -115,7 +115,7 @@ Thesis/
 
 ---
 
-## 🔄 Pipeline Execution Order
+##  Pipeline Execution Order
 
 ### Run Once (Data Preparation):
 
@@ -149,7 +149,7 @@ Access the UI at: `http://<server-ip>:8501`
 
 ---
 
-## 📊 Running Evaluations
+##  Running Evaluations
 
 ```bash
 # Retrieval-only evaluation (no GPU needed, fast)
@@ -170,7 +170,7 @@ python3 src/evaluate.py --compare
 
 ---
 
-## 🧠 Model Configurations Explained
+##  Model Configurations Explained
 
 | Config | Model | Quant | VRAM | Speed | Quality |
 |--------|-------|-------|------|-------|---------|
@@ -182,7 +182,7 @@ python3 src/evaluate.py --compare
 
 ---
 
-## 🔧 Key Technical Decisions
+##  Key Technical Decisions
 
 ### 1. Retrieval Strategy: MMR (Maximum Marginal Relevance)
 ```python
@@ -244,11 +244,10 @@ Only greetings and meta-questions are intercepted. Everything else goes to RAG. 
 
 ---
 
-## 🌐 Remote Access (Our Server Setup)
+##  Remote Access (Our Server Setup)
 
 ```bash
-# SSH to the GPU server
-ssh dolly@10.71.9.36
+
 
 # Use tmux to keep processes running after disconnect
 tmux new -s thesis
@@ -266,55 +265,6 @@ streamlit run src/app_4bit.py --server.port 8501 --server.address 0.0.0.0 \
 # Detach from tmux (keeps running): Ctrl+B then D
 ```
 
----
-
-## 📦 Pushing to GitHub
-
-```bash
-cd ~/Thesis
-
-# Initialize git (first time only)
-git init
-git branch -M main
-
-# Add remote
-git remote add origin https://github.com/YOUR_USERNAME/gfr-legal-assistant.git
-
-# Check what will be tracked (should NOT include venv/ or chroma_db/)
-git status
-
-# Add and commit
-git add .
-git commit -m "GFR Legal Assistant - RAG pipeline with Qwen2.5"
-
-# Push
-git push -u origin main
-```
-
-**Important:** The `.gitignore` excludes `venv/`, `data/chroma_db/`, `data/parsed/`, and `__pycache__/`. The raw PDF and source code will be tracked.
-
----
-
-## 🎬 Video Recording Checklist
-
-For your setup video, cover these steps in order:
-
-1. **Show hardware** — `nvidia-smi` output, GPU specs
-2. **Clone repo** — `git clone ...`
-3. **Create venv** — `python3 -m venv venv && source venv/bin/activate`
-4. **Install torch** — `pip install torch --index-url ...`
-5. **Install deps** — `pip install -r requirements.txt`
-6. **Show PDF** — `ls data/raw_pdfs/`
-7. **Parse PDF** — `python3 src/chunk_gfr_v2.py` (show output: 324 rules, 565 chunks)
-8. **Embed to DB** — `python3 src/embed_and_store.py` (show output: 565 docs stored)
-9. **Run app** — `streamlit run src/app_4bit.py ...`
-10. **Demo queries** — Ask 3-4 questions, show source citations
-11. **Run eval** — `python3 src/evaluate_4bit.py --full`
-12. **Show results** — Hit Rate, MRR, Faithfulness scores
-
-Total recording time: ~15-20 minutes
-
----
 
 ## 📁 File Descriptions
 
